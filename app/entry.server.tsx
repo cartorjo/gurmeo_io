@@ -12,8 +12,10 @@ import {RemixServer} from "@remix-run/react";
 import isbot from "isbot";
 import {renderToPipeableStream} from "react-dom/server";
 
-const ABORT_DELAY = 5_000;
-const INTERNAL_SERVER_ERROR = 500;
+const CONFIG = {
+    ABORT_DELAY: 5000,
+    INTERNAL_SERVER_ERROR: 500,
+};
 
 function logError(error: unknown, shellRendered: boolean) {
     if (shellRendered) {
@@ -31,11 +33,7 @@ function handleRequestCommon(
     return new Promise((resolve, reject) => {
         let shellRendered = false;
         const {pipe, abort} = renderToPipeableStream(
-            <RemixServer
-                context={remixContext}
-                url={request.url}
-                abortDelay={ABORT_DELAY}
-            />,
+            <RemixServer context={remixContext} url={request.url} abortDelay={CONFIG.ABORT_DELAY}/>,
             {
                 onShellReady() {
                     shellRendered = true;
@@ -57,13 +55,13 @@ function handleRequestCommon(
                     reject(error);
                 },
                 onError(error: unknown) {
-                    responseStatusCode = INTERNAL_SERVER_ERROR;
+                    responseStatusCode = CONFIG.INTERNAL_SERVER_ERROR;
                     logError(error, shellRendered);
                 },
             }
         );
 
-        setTimeout(abort, ABORT_DELAY);
+        setTimeout(abort, CONFIG.ABORT_DELAY);
     });
 }
 
