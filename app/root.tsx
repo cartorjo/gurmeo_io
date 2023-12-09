@@ -11,6 +11,8 @@ import {
 
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
+  { rel: "stylesheet", href: "//use.typekit.net/lth1qwt.css", type: "text/css" },
+  { rel: "stylesheet", href: "styles.css" }
 ];
 
 export default function App() {
