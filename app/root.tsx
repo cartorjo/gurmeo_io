@@ -1,35 +1,44 @@
-import { cssBundleHref } from "@remix-run/css-bundle";
-import type { LinksFunction } from "@remix-run/node";
+import React from 'react';
+
 import {
-  Links,
-  LiveReload,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-} from "@remix-run/react";
+    Links,
+    LiveReload,
+    Meta,
+    Outlet,
+    Scripts,
+    ScrollRestoration,
+} from '@remix-run/react';
+import { cssBundleHref } from '@remix-run/css-bundle';
+import type { LinksFunction } from '@remix-run/node';
+
+const typekitCssUrl = '//use.typekit.net/lth1qwt.css';
+const customCssUrl = 'styles.css';
 
 export const links: LinksFunction = () => [
-  ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
-  { rel: "stylesheet", href: "//use.typekit.net/lth1qwt.css", type: "text/css" },
-  { rel: "stylesheet", href: "styles.css" }
+    ...(cssBundleHref ? [{ rel: 'stylesheet', href: cssBundleHref }] : []),
+    {
+        rel: 'stylesheet',
+        href: typekitCssUrl,
+        type: 'text/css',
+    },
+    { rel: 'stylesheet', href: customCssUrl },
 ];
 
 export default function App() {
-  return (
-    <html lang="en">
-      <head>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <Meta />
-        <Links />
-      </head>
-      <body>
+    return (
+        <html lang="en">
+        <head>
+            <meta charSet="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <Meta />
+            <Links />
+        </head>
+        <body>
         <Outlet />
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
-      </body>
-    </html>
-  );
+        </body>
+        </html>
+    );
 }
